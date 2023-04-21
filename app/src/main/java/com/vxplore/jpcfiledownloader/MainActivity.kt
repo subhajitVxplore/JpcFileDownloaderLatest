@@ -1,6 +1,7 @@
 package com.vxplore.jpcfiledownloader
 
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -44,6 +45,7 @@ class MainActivity : ComponentActivity() {
         }
 
         setContent {
+            val context = LocalContext.current
             JpcFileDownloaderTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -59,15 +61,14 @@ class MainActivity : ComponentActivity() {
 //                            Manifest.permission.WRITE_EXTERNAL_STORAGE
                         )
                     )
-
-                    Home()
+                    ShowItemFileLayout(context)
                 }
             }
         }
     }
 //////////////////////////methods//////////////////////////////////////////////////////////////////////////////////////
     fun startDownloadingFile(
-    file: MyFile,
+    file: MyFileModel,
     success:(String) -> Unit,
     failed:(String) -> Unit,
     running:() -> Unit
@@ -121,8 +122,7 @@ class MainActivity : ComponentActivity() {
     }
     //////////////////////////composable///////////////////
     @Composable
-    fun Home() {
-        val context = LocalContext.current
+    fun ShowItemFileLayout(context: Context) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -132,7 +132,7 @@ class MainActivity : ComponentActivity() {
         ) {
             val data = remember {
                 mutableStateOf(
-                    MyFile(
+                    MyFileModel(
                         id = "10",
                         name = "Pdf File 10 MB",
                         type = "PDF",
@@ -168,10 +168,6 @@ class MainActivity : ComponentActivity() {
                 },
 
                 openFile = {
-//                val intent = Intent(Intent.ACTION_VIEW)
-//                intent.setDataAndType(it.downloadedUri?.toUri(),"application/pdf")
-//                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-
                     try {
                         val intent = Intent(Intent.ACTION_VIEW)
                         intent.setDataAndType(it.downloadedUri?.toUri(), "application/pdf")
