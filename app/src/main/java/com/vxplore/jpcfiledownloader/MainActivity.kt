@@ -136,7 +136,8 @@ class MainActivity : ComponentActivity() {
                         id = "10",
                         name = "Pdf File 10 MB",
                         type = "PDF",
-                        url = "https://www.learningcontainer.com/wp-content/uploads/2019/09/sample-pdf-download-10-mb.pdf",
+                       // url = "https://www.learningcontainer.com/wp-content/uploads/2019/09/sample-pdf-download-10-mb.pdf",
+                        url = "https://www.geeksforgeeks.org/wp-content/uploads/gfg_200X200-1.png",
                         downloadedUri = null
                     )
                 )
@@ -170,7 +171,8 @@ class MainActivity : ComponentActivity() {
                 openFile = {
                     try {
                         val intent = Intent(Intent.ACTION_VIEW)
-                        intent.setDataAndType(it.downloadedUri?.toUri(), "application/pdf")
+                        //intent.setDataAndType(it.downloadedUri?.toUri(), "application/pdf")
+                        intent.setDataAndType(it.downloadedUri?.toUri(), "image/*")
                         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                         ContextCompat.startActivity(context, intent, null)
                     } catch (e: ActivityNotFoundException) {
